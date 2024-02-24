@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>关于胖子给瘦子作曲这件事</p>
+    <div id="title"></div>
+    <script>
+        fetch('qj.html')  
+  .then(response => response.text())  
+  .then(data => {  
+    // 假设你有一个名为'container'的元素，你想要将加载的HTML内容插入到这个元素中  
+    document.getElementById('title').innerHTML = data;  
+  })  
+  .catch(error => console.error('Error:', error));
+    </script>
+    <div>
+        在日常生活中，胖子给瘦子作曲这一场景可能并不常见，但我们可以创造一个有趣的故事来描绘这一情景。
+
+在一个宁静的小镇上，有一个著名的音乐家，名叫大胖。他有着圆滚滚的身材，总是带着一副和蔼的笑容。大胖虽然体型庞大，但他的音乐才华却让人叹为观止。他能够创作出让人心灵得到抚慰的旋律，也能创作出让人热血沸腾的摇滚乐曲。
+
+小镇上还有一个瘦小的青年，名叫小瘦。他虽然体型瘦弱，但却有着一颗热爱音乐的心。他总是梦想着能够成为一名优秀的音乐家，但在现实中，他常常感到自己无法与那些天赋异禀的音乐家相比。
+
+有一天，小瘦鼓起勇气来到大胖的家里，希望能够请大胖为他创作一首歌曲。大胖看着眼前这个瘦小的青年，微笑着点了点头。他坐在钢琴前，开始为小瘦创作歌曲。
+
+大胖根据自己的生活经历和对小瘦的了解，创作出了一首充满活力和希望的歌曲。歌曲中，他巧妙地运用了各种音乐元素，使得整首歌曲既充满了激情，又不失柔和与温暖。
+
+小瘦听到这首歌曲后，感动得热泪盈眶。他觉得这首歌曲就像是大胖对他的鼓励和支持，让他重新找回了自信。从此，小瘦开始努力学习音乐，不断提高自己的技艺。
+
+这个故事告诉我们，音乐具有神奇的力量，能够让我们在人生的道路上不断前行。而胖子给瘦子作曲这件事，也成为了小镇上流传已久的一段佳话。
+    </div>
+</body>
+</html>
