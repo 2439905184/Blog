@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>git rebase -i --root 是一个 Git 命令，用于在 Git 版本控制系统中以交互模式（interactive mode）重新基础（rebase）从仓库的根（root）提交开始的所有提交。这个命令特别有用，当你想要重新组织、编辑、合并或删除项目历史中的一系列提交时。
+
+下面是该命令的详细解释：
+
+git rebase：这是 Git 中用于将一系列提交按照新的基础（base）重新应用的命令。它可以用来改变提交的历史，例如，将分支上的提交移动到另一个分支上，或者合并多个提交为一个。
+-i 或 --interactive：这个选项告诉 Git 以交互模式运行 rebase。在交互模式下，Git 会打开一个文本编辑器（通常是 git config --global core.editor 指定的编辑器），让你能够选择一个或多个提交来编辑、重新排序、合并或删除。
+--root：这个选项指定 rebase 的起点为仓库的根提交，即项目的第一个提交。通常，rebase 操作是相对于某个现有分支的提交进行的，但使用 --root 选项时，rebase 会从仓库的第一个提交开始，直到当前分支的最新提交。
+使用 git rebase -i --root 的场景可能包括：
+
+当你想要彻底重新组织项目的历史，从第一个提交开始。
+当你想要合并多个早期的提交，以减少历史中的噪音。
+当你想要删除或修改早期的提交信息，例如作者信息或提交信息。
+注意：使用 git rebase -i --root 可能会对你的项目历史产生重大影响，特别是如果你已经将这些提交推送到了远程仓库。在这种情况下，你应该先确保你了解这些更改的后果，并且你有权力和能力在远程仓库上执行相应的更改（例如，使用 git push --force 来覆盖远程仓库的历史）。此外，在公共仓库上强制推送更改通常是不推荐的，因为它会影响其他协作者的工作。</p>
+</body>
+</html>
