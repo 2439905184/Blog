@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人游戏_动画_影视观看_游玩信息记录</title>
+</head>
+<body>
+    <h2>游戏</h2>
+    <ol id="game"></ol>
+    <h2>动画</h2>
+    <ol id="anime"></ol>
+    <h2>书本</h2>
+    <ol id="book"></ol>
+    <h2>电影</h2>
+    <ol id="film"></ol>
+    <h2>电视剧</h2>
+    <ol id="tv"></ol>
+    <h2>音乐</h2>
+    <ol id="music"></ol>
+    <script>
+        var request = new XMLHttpRequest();
+request.open('GET', 'data/data.json')
+request.send()
+request.onload = function () {
+    var data = JSON.parse(request.responseText)
+    var game = document.getElementById('game')
+    var anime = document.getElementById('anime')
+    var book = document.getElementById('book')
+    var film = document.getElementById('film')
+    var tv = document.getElementById('tv')
+    var music = document.getElementById('music')
+    
+    for(var key in data) {
+        // 获取对应类型的 ol 元素
+        var listElement = document.getElementById(key);
+        
+        if(listElement) {  // 确保元素存在
+            for(var itemKey in data[key]) {
+                var item = data[key][itemKey];
+                var li = document.createElement('li');
+                li.innerHTML = itemKey + " 状态：" + item["status"];
+                listElement.appendChild(li);
+            }
+        }
+    }
+}
+    </script>
+</body>
+</html>
