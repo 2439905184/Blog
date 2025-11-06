@@ -7,6 +7,7 @@
     <title>我的潜意识</title>
 </head>
 <body>
+    <p>被圆神充能然后撑满宇宙之梦，可能存在听了导致膝盖酸的问题</p>
 <?php
     // 获取当前目录文件列表
     $files = scandir(__DIR__);
