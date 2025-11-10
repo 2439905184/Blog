@@ -9,40 +9,34 @@
 <body>
     <p>被圆神充能然后撑满宇宙之梦，可能存在听了导致膝盖酸的问题</p>
 <?php
-    // 获取当前目录文件列表
-    $files = scandir(__DIR__);
-    
-    // 先显示当前目录的文件
-    echo "<h2>当前目录</h2>";
-    echo "<ol>";
-    foreach ($files as $file) {
-        if ($file == '.' || $file == '..') {
-            continue;
-        }
-        if (!is_dir($file)) {
-            echo "<li><a href='$file'>$file</a></li>";
-        }
-    }
-    echo "</ol>";
-    
-    // 再显示子目录的文件
-    foreach ($files as $file) {
-        if ($file == '.' || $file == '..') {
-            continue;
-        }
-        if (is_dir($file)) {
-            echo "<h2>$file</h2>";
-            $subFiles = scandir($file);
-            echo "<ol>";
-            foreach ($subFiles as $subFile) {
-                if ($subFile == '.' || $subFile == '..') {
-                    continue;
-                }
-                echo "<li><a href='$file/$subFile'>$subFile</a></li>";
+    // 递归函数显示目录和文件
+    function listDirectory($dir, $baseDir = '') {
+        $files = scandir($dir);
+        
+        echo "<ol>";
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
             }
-            echo "</ol>";
+            
+            $path = $dir . '/' . $file;
+            // 计算相对于初始目录的路径
+            $relativePath = $baseDir ? $baseDir . '/' . $file : $file;
+            
+            if (is_dir($path)) {
+                echo "<li><strong>$file</strong>";
+                // 递归调用显示子目录
+                listDirectory($path, $relativePath);
+                echo "</li>";
+            } else {
+                echo "<li><a href='$relativePath'>$file</a></li>";
+            }
         }
+        echo "</ol>";
     }
+
+    echo "<h2>文件列表</h2>";
+    listDirectory(__DIR__);
 ?>
 </body>
 </html>
