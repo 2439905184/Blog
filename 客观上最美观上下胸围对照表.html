@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客观上最美观上下胸围对照表</title>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <table id="previewTable"></table>
+    <script>
+        const fileUrl = 'data/客观上最美观上下胸围对照表.xlsx'; // 替换为你的实际文件路径
+
+const xhr = new XMLHttpRequest();
+xhr.open('GET', fileUrl, true);
+xhr.responseType = 'arraybuffer'; // 重要：设置响应类型为 arraybuffer
+
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        const data = xhr.response; // 这是读取到的 Excel 内容（ArrayBuffer）
+
+        // 使用 SheetJS 解析 Excel 数据
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0]; // 取第一个 sheet
+        const worksheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // 将第一行作为表头
+
+        // 预览表格内容
+        const table = document.getElementById('previewTable');
+        table.innerHTML = '';
+
+        // 创建表头
+        const thead = table.createTHead();
+        const headerRow = thead.insertRow();
+        json[0].forEach(cell => {
+            const th = document.createElement('th');
+            th.textContent = cell;
+            headerRow.appendChild(th);
+        });
+
+        // 创建表格体
+        const tbody = table.createTBody();
+        json.slice(1).forEach(rowData => {
+            const tr = tbody.insertRow();
+            rowData.forEach(cell => {
+                const td = tr.insertCell();
+                td.textContent = cell;
+            });
+        });
+    } else {
+        alert('加载文件失败：' + fileUrl);
+    }
+};
+
+xhr.onerror = function () {
+    alert('网络错误，无法加载文件');
+};
+
+xhr.send();
+    </script>
+</body>
+</html>
