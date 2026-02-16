@@ -19,7 +19,7 @@
              $fullPath = $dir . DIRECTORY_SEPARATOR . $item;
              if(is_file($fullPath) && $item != 'index.php')
              {
-                 echo "<li><a href=" .$item . ">" .$item . "</a></li>";
+                 echo "<li><a target='_blank' href=" .$item . ">" .$item . "</a></li>";
              }
          }
     ?>
