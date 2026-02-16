@@ -10,18 +10,36 @@
     <img src="../img/youji.png" alt="忧姬">
     <p>忧姬是Noesis里的一个角色，体弱多病，但她教会我：释然的微笑，比健康更珍贵。
 这里是我存放那种微笑的地方。</p>
+    <a target="_blank" href="心智身高体重容量计算器.html">心智身高体重容量计算器1</a>
+    <a target="_blank" href="心智身高体重容量计算器-作品数量版.html">心智身高体重容量计算器2</a>
     <ol>
     <?php
-         $dir = __DIR__;
-         $items = scandir($dir);
-         $folders = [];
-         foreach ($items as $item) {
-             $fullPath = $dir . DIRECTORY_SEPARATOR . $item;
-             if(is_file($fullPath) && $item != 'index.php')
-             {
-                 echo "<li><a target='_blank' href=" .$item . ">" .$item . "</a></li>";
-             }
-         }
+        // 递归函数显示目录和文件
+        function listDirectory($dir, $baseDir = '') {
+            $files = scandir($dir);
+            
+            echo "<ol>";
+            foreach ($files as $file) {
+                if ($file == '.' || $file == '..') {
+                    continue;
+                }
+                
+                $path = $dir . '/' . $file;
+                // 计算相对于初始目录的路径
+                $relativePath = $baseDir ? $baseDir . '/' . $file : $file;
+                
+                if (is_dir($path)) {
+                    echo "<li><strong>$file</strong>";
+                    // 递归调用显示子目录
+                    listDirectory($path, $relativePath);
+                    echo "</li>";
+                } else {
+                    echo "<li><a href='$relativePath'>$file</a></li>";
+                }
+            }
+            echo "</ol>";
+        }
+        listDirectory(__DIR__);
     ?>
     </ol>
 </body>
