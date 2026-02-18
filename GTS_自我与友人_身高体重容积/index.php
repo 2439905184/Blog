@@ -17,6 +17,7 @@
     </ol>
     <a target="_blank" href="心智身高体重容量计算器.html">心智身高体重容量计算器1</a>
     <a target="_blank" href="心智身高体重容量计算器-作品数量版.html">心智身高体重容量计算器2</a>
+    <a target="_blank" href="https://www.cnblogs.com/1288blog/p/19622994">gts growth.nim娱乐程序</a>
     <ol>
     <?php
         // 递归函数显示目录和文件
