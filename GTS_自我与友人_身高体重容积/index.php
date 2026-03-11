@@ -15,6 +15,8 @@
         <li><a href="../data/向观世音菩萨祈愿文[星云法师.txt">向观世音菩萨祈愿文[星云法师.txt</a></li>
         <li><a href="../data/向观世音菩萨祈愿文[星云法师-自我修改版.txt">向观世音菩萨祈愿文[星云法师-自我修改版.txt</a></li>
     </ol>
+    <h2>我的三围</h2>
+    <p>臀围83cm 腰围 67cm 下胸围 70cm</p>
     <a target="_blank" href="心智身高体重容量计算器.html">心智身高体重容量计算器1</a>
     <a target="_blank" href="心智身高体重容量计算器-作品数量版.html">心智身高体重容量计算器2</a>
     <a target="_blank" href="https://www.cnblogs.com/1288blog/p/19622994">gts growth.nim娱乐程序</a>
