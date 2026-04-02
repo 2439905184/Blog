@@ -7,32 +7,36 @@
     <title>AI聊天记录</title>
 </head>
 <body>
-    <h2>deepseek</h2>
     <ol>
         <?php
-            $dir = __DIR__;
-            $chatDir = $dir . DIRECTORY_SEPARATOR . "deepseek聊天记录";
-            $items = scandir($chatDir);
-            $folders = [];
-
-            if ($items !== false) {
-                foreach ($items as $item) {
-                    $fullPath = $chatDir . DIRECTORY_SEPARATOR . $item;
-
-                    // 忽略 . 和 .. 两个特殊目录
-                    if ($item === '.' || $item === '..') {
-                        continue;
-                    }
-
-                    // 仅处理文件（非目录）
-                    if (is_file($fullPath) && $item != 'index.php') {
-                        // 这里将文件名作为超链接，假设文件是 HTML 文件
-                        echo "<li><a href='" . htmlspecialchars("deepseek聊天记录" . DIRECTORY_SEPARATOR . $item) . "'>" . htmlspecialchars($item) . "</a></li>";
-                    }
-                }
-            } else {
-                echo "<li>无法读取目录</li>";
+            // 递归函数显示目录和文件
+    function listDirectory($dir, $baseDir = '') {
+        $files = scandir($dir);
+        
+        echo "<ol>";
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..' || $file == 'index.php') {
+                continue;
             }
+            
+            $path = $dir . '/' . $file;
+            // 计算相对于初始目录的路径
+            $relativePath = $baseDir ? $baseDir . '/' . $file : $file;
+            
+            if (is_dir($path)) {
+                echo "<li><strong>$file</strong>";
+                // 递归调用显示子目录
+                listDirectory($path, $relativePath);
+                echo "</li>";
+            } else {
+                echo "<li><a href='$relativePath'>$file</a></li>";
+            }
+        }
+        echo "</ol>";
+    }
+
+    echo "<h2>文件列表</h2>";
+    listDirectory(__DIR__);
         ?>
     </ol>
 </body>

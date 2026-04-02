@@ -21,7 +21,8 @@
         
         echo "<ol>";
         foreach ($files as $file) {
-            if ($file == '.' || $file == '..') {
+            if ($file == '.' || $file == '..' || $file == 'index.php') 
+            {
                 continue;
             }
             
