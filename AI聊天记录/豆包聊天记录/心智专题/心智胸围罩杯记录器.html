@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心智胸围罩杯记录</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
+body{background:#fdf6f9;padding:20px;max-width:1000px;margin:0 auto}
+h1{text-align:center;color:#d63384;margin-bottom:10px}
+.subtitle{text-align:center;color:#666;margin-bottom:30px}
+.container{display:flex;flex-wrap:wrap;gap:20px}
+.panel{flex:1;min-width:300px;background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+.form-group{margin-bottom:15px}
+label{display:block;margin-bottom:6px;font-weight:bold;color:#333}
+textarea,select{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:14px}
+button{background:#d63384;color:#fff;border:none;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
+button:hover{background:#b82a70}
+.chart-box{margin-top:20px;height:300px}
+.record-list{margin-top:20px;max-height:400px;overflow-y:auto}
+.record-item{padding:12px;border-bottom:1px solid #eee;cursor:pointer;border-radius:6px;margin-bottom:6px}
+.record-item:hover{background:#f8eaf1}
+.record-time{font-size:12px;color:#999}
+.record-cup{font-weight:bold;color:#d63384}
+.cup-canvas-box{width:100%;display:flex;justify-content:center;margin-bottom:20px}
+#cupCanvas{border-radius:8px;background:#f8eef5}
+.current-cup{font-size:22px;font-weight:bold;color:#d63384;margin-bottom:10px;text-align:center}
+</style>
+</head>
+<body>
+<h1>心智胸围罩杯记录</h1>
+<p class="subtitle">记录每次成长与缩水，可视化心智变化</p>
+
+<div class="container">
+  <div class="panel">
+    <div class="form-group">
+      <label>事件描述</label>
+      <textarea id="desc" rows="3" placeholder="例如：移植880行maysky代码"></textarea>
+    </div>
+    <div class="form-group">
+      <label>罩杯尺码（A-Z）</label>
+      <select id="cup"></select>
+    </div>
+    <button onclick="save()">保存记录</button>
+    <div class="chart-box"><canvas id="chart"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <div class="current-cup">当前罩杯：<span id="cupLabel">-</span></div>
+    <div class="cup-canvas-box">
+      <canvas id="cupCanvas" width="300" height="360"></canvas>
+    </div>
+    <div class="record-list" id="list"></div>
+  </div>
+</div>
+
+<script>
+const cups = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const cupSelect = document.getElementById("cup");
+cups.forEach(function(c){
+  const opt = document.createElement("option");
+  opt.value = c;
+  opt.textContent = c + "罩杯";
+  cupSelect.appendChild(opt);
+});
+
+let records = JSON.parse(localStorage.getItem("mindCupRecords")) || [];
+let chartInstance;
+const canvas = document.getElementById("cupCanvas");
+const ctx = canvas.getContext("2d");
+
+function initChart(){
+  const ct = document.getElementById("chart").getContext("2d");
+  chartInstance = new Chart(ct, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "心智胸围等级",
+        data: [],
+        borderColor: "#d63384",
+        backgroundColor: "rgba(214,51,132,0.15)",
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 25,
+          ticks: {
+            callback: function(v){ return cups[v] || ""; }
+          }
+        }
+      }
+    }
+  });
+}
+
+function drawCup(cup){
+  const index = cups.indexOf(cup);
+  const baseSize = 30;
+  const radius = baseSize + index * 4;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#d63384";
+  ctx.beginPath();
+  ctx.arc(canvas.width/2, canvas.height/2, radius, 0, Math.PI*2);
+  ctx.fill();
+
+  document.getElementById("cupLabel").textContent = cup;
+}
+
+function updateChart(){
+  const labels = records.map(function(r,i){ return "#"+(i+1); });
+  const values = records.map(function(r){ return cups.indexOf(r.cup); });
+  chartInstance.data.labels = labels;
+  chartInstance.data.datasets[0].data = values;
+  chartInstance.update();
+}
+
+function renderList(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  const reversed = records.slice().reverse();
+  reversed.forEach(function(r){
+    const item = document.createElement("div");
+    item.className = "record-item";
+    item.innerHTML = `
+      <div class="record-cup">${r.cup}罩杯</div>
+      <div>${r.desc}</div>
+      <div class="record-time">${r.time}</div>
+    `;
+    item.onclick = function(){ drawCup(r.cup); };
+    list.appendChild(item);
+  });
+  if(records.length > 0){
+    drawCup(records[records.length-1].cup);
+  }
+}
+
+function save(){
+  const desc = document.getElementById("desc").value.trim();
+  const cup = document.getElementById("cup").value;
+  if(!desc){
+    alert("请填写描述内容");
+    return;
+  }
+  const now = new Date();
+  const time = now.getHours() + ":" + String(now.getMinutes()).padStart(2,"0");
+  records.push({ desc: desc, cup: cup, time: time });
+  localStorage.setItem("mindCupRecords", JSON.stringify(records));
+  document.getElementById("desc").value = "";
+  refresh();
+}
+
+function refresh(){
+  updateChart();
+  renderList();
+}
+
+window.onload = function(){
+  initChart();
+  refresh();
+};
+</script>
+</body>
+</html>
