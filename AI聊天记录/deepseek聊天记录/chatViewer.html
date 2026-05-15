@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI聊天记录查看器</title>
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+<body>
+    <h1 align="center">AI聊天记录查看器</h1>
+    <ol>
+        <li><button onclick="updateContent('高位女_掌控欲.txt')">高位女_掌控欲</button></li>
+    </ol>
+    <div id="vierwer">
+
+    </div>
+    <script>
+        const viewer = document.getElementById("viewer")
+        function generateDom(responseText)
+        {
+            // todo
+            return dom
+        }
+        function updateContent(url)
+        {
+            const request = new XMLHttpRequest()
+            if (viewer.hasChildNodes())
+            {    
+                for (var i = 0; i< viewer.childNodes.length; i++)
+                {
+                    viewer.removeChild(viewer.childNodes[i])
+                }
+                request.open(url, "GET")
+                request.onload = function()
+                {
+                    if (request.status.stauts == 200)
+                    {
+                        var dom = generateDom(request.responseText)
+                        div.append(dom)
+                    }
+                }
+            }
+            else 
+            {
+                request.open(url, "GET")
+                request.onload = function()
+                {
+                    if (request.status.stauts == 200)
+                    {
+                        var dom = generateDom(request.responseText)
+                        div.append(dom)
+                    }
+                }
+            }
+            request.send()
+        }
+    </script>
+</body>
+</html>

@@ -7,6 +7,7 @@
     <title>AI聊天记录</title>
 </head>
 <body>
+    <a href="deepseek聊天记录/絮语.html">絮语</a>
     <ol>
         <?php
             // 递归函数显示目录和文件
